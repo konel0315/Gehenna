@@ -1,0 +1,85 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f4991aa20adb407a9d95562ced746797, type: 3}
+  m_Name: EventData
+  m_EditorClassIdentifier: 
+  serializationData:
+    SerializedFormat: 2
+    SerializedBytes: 
+    ReferencedUnityObjects: []
+    SerializedBytesString: 
+    Prefab: {fileID: 0}
+    PrefabModificationsReferencedUnityObjects: []
+    PrefabModifications: []
+    SerializationNodes: []
+  eventPages:
+  - Priority: 0
+    Graphic:
+      MainSprite: {fileID: 21300000, guid: 341d6a330c9ed0a489ca6471fa70c6b4, type: 3}
+      Idle:
+        Up: {fileID: 7400000, guid: 972b5e86724f16547a42c20f409148d0, type: 2}
+        Down: {fileID: 0}
+        Left: {fileID: 0}
+        Right: {fileID: 0}
+      Walk:
+        Up: {fileID: 0}
+        Down: {fileID: 0}
+        Left: {fileID: 0}
+        Right: {fileID: 0}
+    Condition:
+      Logic: 0
+      Conditions:
+      - rid: 3873625675061264455
+      - rid: 3873625713042260043
+      - rid: 3873625713042260044
+      Condition:
+        rid: -2
+    Content:
+      Contents:
+      - rid: 3873625713042260045
+      - rid: 3873625713042260046
+      - rid: 3873625713042260047
+      - rid: 3873625713042260048
+      - rid: 3873625713042260049
+      - rid: 3873625713042260050
+  references:
+    version: 2
+    RefIds:
+    - rid: -2
+      type: {class: , ns: , asm: }
+    - rid: 3873625675061264455
+      type: {class: ItemCondition, ns: Gehenna, asm: Assembly-CSharp}
+      data: 
+    - rid: 3873625713042260043
+      type: {class: SwitchCondition, ns: Gehenna, asm: Assembly-CSharp}
+      data: 
+    - rid: 3873625713042260044
+      type: {class: VariableCondition, ns: Gehenna, asm: Assembly-CSharp}
+      data: 
+    - rid: 3873625713042260045
+      type: {class: AnimationContent, ns: Gehenna, asm: Assembly-CSharp}
+      data: 
+    - rid: 3873625713042260046
+      type: {class: DialogContent, ns: Gehenna, asm: Assembly-CSharp}
+      data: 
+    - rid: 3873625713042260047
+      type: {class: MovementContent, ns: Gehenna, asm: Assembly-CSharp}
+      data: 
+    - rid: 3873625713042260048
+      type: {class: SwitchControlContent, ns: Gehenna, asm: Assembly-CSharp}
+      data: 
+    - rid: 3873625713042260049
+      type: {class: VariableControlContent, ns: Gehenna, asm: Assembly-CSharp}
+      data: 
+    - rid: 3873625713042260050
+      type: {class: WaitContent, ns: Gehenna, asm: Assembly-CSharp}
+      data: 
