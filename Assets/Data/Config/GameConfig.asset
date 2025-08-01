@@ -25,6 +25,18 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 3c79d06c819e0fe428001b82c97d3196, type: 2}
   - {fileID: 11400000, guid: 9396b3eead6b63c4a9655f3b04bc768e, type: 2}
   - {fileID: 11400000, guid: 5e7831ac4443c4e4b8b5f0f5ba4461f6, type: 2}
-  InputActionAsset: {fileID: -944628639613478452, guid: 2bcd2660ca9b64942af0de543d8d7100, type: 3}
-  AudioConfig: {fileID: 11400000, guid: f3ce9b669bcdab04fa0f6481ff9f556c, type: 2}
-  DialogueTableSO: {fileID: 11400000, guid: c8320a62767ae1f4594d11be176fb4a4, type: 2}
+  - {fileID: 11400000, guid: d143b592c0d563047877c7d33be628e7, type: 2}
+  - {fileID: 11400000, guid: 2226445117b2eff498bb2b48d8959a04, type: 2}
+  configs:
+  - {fileID: 11400000, guid: f3ce9b669bcdab04fa0f6481ff9f556c, type: 2}
+  - {fileID: 11400000, guid: 321f7e28ef0cf434494a56cdd6d18645, type: 2}
+  - {fileID: 11400000, guid: 61ad1134a065de64b86d5c5bb1c28b7c, type: 2}
+  - {fileID: 11400000, guid: 5d733eea6f8dec340976c7d86c14bab5, type: 2}
+  tableSOList:
+  - {fileID: 11400000, guid: 87bdfdb1faa24cf478b56ab9ca526b9e, type: 2}
+  - {fileID: 11400000, guid: 35a525e8c0fc5cc4f9954728e9f13586, type: 2}
+  gameStateConfigs:
+  - {fileID: 11400000, guid: c9bada836e17c6846bf7c354ce378ef4, type: 2}
+  - {fileID: 11400000, guid: 2c44e7bfe9fd2494bb40b95031b55894, type: 2}
+  - {fileID: 11400000, guid: eefea7cc05ed1cb4f9cb037b6645f2ea, type: 2}
+  FixedDeltaTime: 0.016

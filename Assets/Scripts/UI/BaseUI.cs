@@ -1,37 +1,41 @@
 ﻿using System;
+using Sirenix.OdinInspector;
 using UnityEngine;
 
 namespace Gehenna
 {
-    public abstract class BaseUI : MonoBehaviour
+    public abstract class BaseUI<TModel> : MonoBehaviour where TModel : BaseUIModel
     {
-        protected BaseUIModel model;
+        [ShowInInspector, ReadOnly]
+        public abstract UILayerType LayerType { get; }
 
-        public void Initialized(BaseUIModel model)
-        {
-           this.model = model;
-           RectTransform rect = GetComponent<RectTransform>();
-           if(model != null){
-               rect.sizeDelta = model.SizeDelta ?? new Vector2();
-               rect.anchoredPosition  = model.AnchoredPosition ?? new Vector2();
-               
-           }
-           
-           OnOpen();
-        }
+        protected TModel model { get; private set; }
 
-        public virtual void OnOpen()
+        public void Open(BaseUIModel model)
         {
+            gameObject.SetActive(true);
             
+            if (model is not TModel castedModel)
+            {
+                GehennaLogger.Log(this, LogType.Error, $"Invalid model type. Expected: {typeof(TModel).Name}, Received: {model?.GetType().Name}");
+                return;
+            } 
+            this.model = castedModel; 
+            
+            RectTransform rect = GetComponent<RectTransform>(); 
+            rect.sizeDelta = model.SizeDelta ?? new Vector2(); 
+            rect.anchoredPosition  = model.AnchoredPosition ?? new Vector2(); 
+            
+            OnOpen();
         }
 
-        public virtual void OnClose()
+        public void Close()
         {
+            gameObject.SetActive(false);
+            OnClose();
         }
 
-        public virtual void SetModel(BaseUIModel model)
-        {
-        }
-        
+        protected virtual void OnOpen() { }
+        protected virtual void OnClose() { }
     }
 }

@@ -6,12 +6,13 @@ namespace Gehenna
     public abstract class BaseGameState : IState<GameFlowManager>
     {
         protected GameFlowManager owner { get; private set; }
-        protected StateMachine<GameFlowManager> stateMachine { get; private set; }
-    
-        public virtual void Initialize(GameFlowManager owner, StateMachine<GameFlowManager> stateMachine)
+        protected GameFlowParam param { get; private set; }
+        protected StateMachine<GameFlowManager> stateMachine => owner.GetStateMachine();
+
+        public BaseGameState(GameFlowManager owner, GameFlowParam param)
         {
             this.owner = owner;
-            this.stateMachine = stateMachine;
+            this.param = param;
         }
 
         public virtual void Enter()
@@ -25,9 +26,6 @@ namespace Gehenna
         }
 
         public abstract void Update();
-
-        public abstract void LateUpdate();
-
         public abstract void FixedUpdate();
     }
 }

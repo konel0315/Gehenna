@@ -1,12 +1,13 @@
 using System.Collections.Generic;
 using Sirenix.OdinInspector;
+using UnityEngine;
 
 namespace Gehenna
 {
-    public class DialogueTableSO : SerializedScriptableObject
+    public class DialogueTableSO : BaseTableSO
     {
-        public List<DialogueTable> Tables;
+        public Dictionary<string, List<DialogueTable>> GroupedTables;
 
-        public List<DialogueTable> GetTables() => Tables;
+        public Dictionary<string, List<DialogueTable>> GetGroupedTables() => GroupedTables;
     }
 }

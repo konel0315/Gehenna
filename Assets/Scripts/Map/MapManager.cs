@@ -5,33 +5,28 @@ namespace Gehenna
 {
     public class MapManager : ISubManager
     {
-        private MapContext context;
+        private MapParam _param;
         private MapRoot currentMapRoot;
         private bool isTransitioning;
         
-        public void Initialize(ManagerContext context)
+        public void Initialize(ManagerParam param)
         {
-            if (context is not MapContext mapContext)
+            if (param is not MapParam mapContext)
             {
                 GehennaLogger.Log(this, LogType.Error, "Invalid context");
                 return;
             }
-            this.context = mapContext;
+            this._param = mapContext;
             
             GehennaLogger.Log(this, LogType.Success, "Initialize");
         }
 
         public void CleanUp()
         {
-            context = null;
+            _param = null;
         }
 
-        public void ManualUpdate()
-        {
-            
-        }
-
-        public void ManualLateUpdate()
+        public void ManualUpdate(float deltaTime)
         {
             
         }
@@ -41,7 +36,7 @@ namespace Gehenna
             
         }
         
-        public async UniTask ChangeMap(MapType mapType)
+        public void ChangeMap(string key)
         {
             if (isTransitioning)
                 return;
@@ -53,7 +48,7 @@ namespace Gehenna
                 // TODO: Fade-Out
 
                 UnloadMap();
-                LoadMap(mapType);
+                LoadMap(key);
                 
                 // TODO: Fade-In
             }
@@ -63,9 +58,9 @@ namespace Gehenna
             }
         }
 
-        private void LoadMap(MapType mapType)
+        private void LoadMap(string key)
         {
-            if (!context.ResourceManager.TryGetMap(mapType, out var mapBundle))
+            if (!_param.ResourceManager.TryGetMap(key, out var mapBundle))
             {
                 GehennaLogger.Log(this, LogType.Error, "Invalid map type");
                 return;

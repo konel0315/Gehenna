@@ -1,16 +1,17 @@
-﻿using UnityEngine;
+﻿using System;
+using UnityEngine;
 
 namespace Gehenna
 {
-    public class BaseUIModel
+    public abstract class BaseUIModel
     {
         public Vector2? AnchoredPosition;
         public Vector2? SizeDelta;
-
+        
         public BaseUIModel(Vector2? anchoredPosition = null, Vector2? sizeDelta = null)
         {
-            AnchoredPosition= anchoredPosition;
-            SizeDelta= sizeDelta;
+            AnchoredPosition = anchoredPosition;
+            SizeDelta = sizeDelta;
         }
     }
 }

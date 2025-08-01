@@ -2,10 +2,9 @@
 {
     public interface ISubManager
     {
-        void Initialize(ManagerContext context);
+        void Initialize(ManagerParam param);
         void CleanUp();
-        void ManualUpdate();
-        void ManualLateUpdate();
+        void ManualUpdate(float deltaTime);
         void ManualFixedUpdate();
     }
 }

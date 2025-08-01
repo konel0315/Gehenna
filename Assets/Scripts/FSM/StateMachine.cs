@@ -28,7 +28,6 @@ namespace Gehenna
                 throw new InvalidOperationException($"State {type} is already added.");
     
             stateDict[type] = state;
-            state.Initialize(owner, this);
         }
         
         public void ChangeState<TState>() where TState : IState<T>
@@ -49,11 +48,6 @@ namespace Gehenna
         public void ManualUpdate()
         {
             currentState?.Update();
-        }
-    
-        public void ManualLateUpdate()
-        {
-            currentState?.LateUpdate();
         }
     
         public void ManualFixedUpdate()

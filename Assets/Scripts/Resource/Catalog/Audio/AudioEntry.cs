@@ -1,11 +1,12 @@
 ﻿using System;
+using UnityEngine.Serialization;
 
 namespace Gehenna
 {
     [Serializable]
     public class AudioEntry
     {
-        public AudioType Key;
-        public AudioTrack AudioTrack;
+        public string Key;
+        public AudioBundle audioBundle;
     }
 }

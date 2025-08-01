@@ -24,10 +24,10 @@ namespace Gehenna
             currentHandler = null;
         }
 
-        public void Play(AudioTrack audioTrack)
+        public void Play(AudioBundle audioBundle)
         {
-            float volume = mixer.GetFinalVolume(audioTrack.BusType, audioTrack.BaseVolume);
-            currentHandler.Play(audioTrack.AudioClip, volume: volume, audioTrack.Loop);
+            float volume = mixer.GetFinalVolume(audioBundle.BusType, audioBundle.BaseVolume);
+            currentHandler.Play(audioBundle.AudioClip, volume: volume, audioBundle.Loop);
         }
 
         public void Pause()
@@ -54,15 +54,15 @@ namespace Gehenna
                 GehennaLogger.Log(this, LogType.Warning, "Cannot stop, audio handler is not available.");
         }
 
-        public void FadeIn(AudioTrack audioTrack, float duration)
+        public void FadeIn(AudioBundle audioBundle, float duration)
         {
-            float volume = mixer.GetFinalVolume(audioTrack.BusType, audioTrack.BaseVolume);
+            float volume = mixer.GetFinalVolume(audioBundle.BusType, audioBundle.BaseVolume);
             currentHandler.FadeIn
             (
-                clip: audioTrack.AudioClip,
+                clip: audioBundle.AudioClip,
                 duration: duration,
                 targetVolume: volume,
-                loop: audioTrack.Loop
+                loop: audioBundle.Loop
             ).Forget();
         }
 
@@ -71,7 +71,7 @@ namespace Gehenna
             currentHandler.FadeOut(duration).Forget();
         }
 
-        public void FadeTo(AudioTrack nextTrack, float duration)
+        public void FadeTo(AudioBundle nextBundle, float duration)
         {
             FadeToInternal().Forget();
 
@@ -81,14 +81,14 @@ namespace Gehenna
             {
                 if (currentHandler.IsPlaying)
                 {
-                    Play(nextTrack);
+                    Play(nextBundle);
                     return;
                 }
                 
-                float volume = mixer.GetFinalVolume(nextTrack.BusType, nextTrack.BaseVolume);
+                float volume = mixer.GetFinalVolume(nextBundle.BusType, nextBundle.BaseVolume);
                 
                 await currentHandler.FadeOut(duration);
-                await currentHandler.FadeIn(nextTrack.AudioClip, duration, volume, nextTrack.Loop);
+                await currentHandler.FadeIn(nextBundle.AudioClip, duration, volume, nextBundle.Loop);
             }
         }
     }

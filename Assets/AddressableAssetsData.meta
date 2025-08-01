@@ -1,0 +1,12 @@
+fileFormatVersion: 2
+<<<<<<<< HEAD:Assets/AddressableAssetsData.meta
+guid: 597357b598b52bc438d32b64c14a192e
+========
+guid: deb00f9b38cf8ab4a8b4cdf343100592
+>>>>>>>> cff1811 (feat: DialogueTester Exel제거):Assets/Data/GameDesign/DialogueCommand.meta
+folderAsset: yes
+DefaultImporter:
+  externalObjects: {}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

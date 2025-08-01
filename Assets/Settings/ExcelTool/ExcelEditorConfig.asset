@@ -12,7 +12,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 59eb15bce2534735b7725fb576c9d0eb, type: 3}
   m_Name: ExcelEditorConfig
   m_EditorClassIdentifier: 
-  ExcelFolder: Assets/Data/GameDesign/Excel
   SchemaFolder: Assets/Data/GameDesign/Schema
   SoFolder: Assets/Data/GameDesign/SO
   GeneratedCodeFolder: Assets/Scripts/GameDesign

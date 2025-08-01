@@ -8,10 +8,10 @@ namespace Gehenna
     {
         private static readonly Dictionary<LogType, string> LogColorMap = new()
         {
-            { LogType.Info,    "white" },
-            { LogType.Success, "green" },
-            { LogType.Warning, "yellow" },
-            { LogType.Error,   "red" }
+            { LogType.Info,    "#FFFFFF" }, // White
+            { LogType.Success, "#228B22" }, // Forest green
+            { LogType.Warning, "#FFFF00" }, // Yellow
+            { LogType.Error,   "#FF0000" }  // Red
         };
         
         public static void Log(object caller, LogType logType, string message)

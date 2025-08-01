@@ -1,0 +1,40 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: adbb98d1e98a97b4ca4fa850fc676740, type: 3}
+  m_Name: DialogueCommand
+  m_EditorClassIdentifier: 
+  dialogueTableSO: {fileID: 11400000, guid: 35a525e8c0fc5cc4f9954728e9f13586, type: 2}
+  DialogueActionData:
+  - DialogueKey: FirstDialogue
+    ID: 1
+    ActionsType: 0
+    UIType: CommonUI
+    Position: {x: 100, y: 100}
+    Size: {x: 100, y: 100}
+    Rotation: {x: 0, y: 0, z: 0}
+    Speed: 0
+    Param: CommonUI,100,100,100,100
+    DialogueKeys:
+    - FirstDialogue
+    IDs: 0100000002000000030000000400000005000000060000000700000008000000090000000a000000
+  - DialogueKey: FirstDialogue
+    ID: 2
+    ActionsType: 3
+    UIType: CommonUI
+    Position: {x: 0, y: 0}
+    Size: {x: 0, y: 0}
+    Rotation: {x: 180, y: 180, z: 180}
+    Speed: 2
+    Param: CommonUI,180,180,180,2
+    DialogueKeys:
+    - FirstDialogue
+    IDs: 0100000002000000030000000400000005000000060000000700000008000000090000000a000000

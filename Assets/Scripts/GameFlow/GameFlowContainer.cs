@@ -7,7 +7,7 @@ namespace Gehenna
     {
         private readonly Dictionary<Type, BaseGameState> gameStateMap = new Dictionary<Type, BaseGameState>();
         private readonly Dictionary<Type, Func<BaseGameState>> factoryMap = new Dictionary<Type, Func<BaseGameState>>();
-
+        
         public void Register<T>(Func<T> factory) where T : BaseGameState
         {
             factoryMap[typeof(T)] = () => factory();

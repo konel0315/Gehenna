@@ -21,7 +21,9 @@ MonoBehaviour:
     PrefabModificationsReferencedUnityObjects: []
     PrefabModifications: []
     SerializationNodes: []
+  outputFolder: Assets/Scripts/Resource/Catalog/Map
+  sourceFolder: Assets/Prefabs/Map
   entries:
-  - mapType: 0
-    mapBundle:
-      mapPrefab: {fileID: 628751134841479221, guid: 3ef3441259960aa4cae3e50e1c44d0fe, type: 3}
+  - Key: Map_001
+    Bundle:
+      mapPrefab: {fileID: 296724868616383756, guid: 3ef3441259960aa4cae3e50e1c44d0fe, type: 3}

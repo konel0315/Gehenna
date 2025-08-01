@@ -2,55 +2,47 @@
 {
     public class GameFlowManager : ISubManager
     {
-        private GameFlowContext context;
+        private GameFlowParam param;
         private GameFlowContainer container;
         private StateMachine<GameFlowManager> stateMachine;
         
-        public void Initialize(ManagerContext context)
+        public void Initialize(ManagerParam param)
         {
-            if (context is not GameFlowContext gameFlowContext)
+            if (param is not GameFlowParam gameFlowParam)
             {
                 GehennaLogger.Log(this, LogType.Error, "Invalid context");
                 return;
             }
-            this.context = gameFlowContext;
+            this.param = gameFlowParam;
             
             container = new GameFlowContainer();
-            container.Register(() => new BootState());
-            container.Register(() => new IntroState());
-            container.Register(() => new PlayState());
-            container.Register(() => new TitleState());
+            container.Register(() => new IntroState(this, this.param));
+            container.Register(() => new TitleState(this, this.param));
+            container.Register(() => new PlayState(this, this.param));
             
             BaseGameState[] states = new BaseGameState[]
             {
-                container.Resolve<BootState>(),
                 container.Resolve<IntroState>(),
+                container.Resolve<TitleState>(),
                 container.Resolve<PlayState>(),
-                container.Resolve<TitleState>()
             };
-
-            stateMachine = new StateMachine<GameFlowManager>(this);
-            foreach (var state in states)
-            {
-                stateMachine.AddState(state);
-            }
             
+            stateMachine = new StateMachine<GameFlowManager>(this);
+            
+            foreach (var state in states)
+                stateMachine.AddState(state);
+ 
             GehennaLogger.Log(this, LogType.Success, "Initialize");
         }
 
         public void CleanUp()
         {
-            context = null;
+            
         }
 
-        public void ManualUpdate()
+        public void ManualUpdate(float deltaTime)
         {
             stateMachine?.ManualUpdate();
-        }
-
-        public void ManualLateUpdate()
-        {
-            stateMachine?.ManualLateUpdate();
         }
 
         public void ManualFixedUpdate()
@@ -60,12 +52,17 @@
 
         public void Run()
         {
-            stateMachine.ChangeState<BootState>();
+            stateMachine.ChangeState<IntroState>();
         }
 
         public BaseGameState GetGameState<T>() where T : BaseGameState
         {
             return container.Resolve<T>();
+        }
+
+        public StateMachine<GameFlowManager> GetStateMachine()
+        {
+            return stateMachine;
         }
     }
 }

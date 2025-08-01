@@ -9,24 +9,24 @@ namespace Gehenna
         [SerializeField]
         private List<AudioEntry> entries = new();
     
-        private Dictionary<AudioType, AudioTrack> lookup;
+        private Dictionary<string, AudioBundle> lookup;
         
         public override void Initialize()
         {
             if (lookup != null) 
                 return;
         
-            lookup = new Dictionary<AudioType, AudioTrack>();
+            lookup = new Dictionary<string, AudioBundle>();
             foreach (var entry in entries)
             {
-                if (!lookup.TryAdd(entry.Key, entry.AudioTrack))
+                if (!lookup.TryAdd(entry.Key, entry.audioBundle))
                 {
                     Debug.LogWarning($"Duplicate Item: {entry.Key} in {nameof(AudioCatalog)}");
                 }
             }
         }
 
-        public bool TryGet(AudioType key, out AudioTrack result)
+        public bool TryGet(string key, out AudioBundle result)
         {
             if (!lookup.TryGetValue(key, out result))
                 return false;

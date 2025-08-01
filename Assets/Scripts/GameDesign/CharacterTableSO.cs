@@ -3,8 +3,10 @@ using Sirenix.OdinInspector;
 
 namespace Gehenna
 {
-    public class CharacterTableSO : SerializedScriptableObject
+    public class CharacterTableSO : BaseTableSO
     {
         public List<CharacterTable> Tables;
+
+        public IReadOnlyList<CharacterTable> GetTables() => Tables;
     }
 }

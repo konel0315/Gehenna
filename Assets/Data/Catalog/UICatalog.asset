@@ -21,8 +21,51 @@ MonoBehaviour:
     PrefabModificationsReferencedUnityObjects: []
     PrefabModifications: []
     SerializationNodes: []
+  outputFolder: Assets/Scripts/Resource/Catalog/UI
+  sourceFolder: Assets/Prefabs/UI
   entries:
-  - Key: 0
-    Prefab: {fileID: 114888098468905183, guid: be9483bd529435942aae57b320eecfcd, type: 3}
-    Capacity: 0
-    IsPooling: 0
+  - Key: DialogueUI
+    Bundle:
+      Prefab: {fileID: 114888098468905183, guid: be9483bd529435942aae57b320eecfcd, type: 3}
+      IsPoolable: 0
+      Capacity: 10
+  - Key: TitleUI
+    Bundle:
+      Prefab: {fileID: 4870330007756257976, guid: 9416cacf0b0ff0e44b94eb028cf5376b, type: 3}
+      IsPoolable: 0
+      Capacity: 3
+  - Key: IntroUI
+    Bundle:
+      Prefab: {fileID: 5495297009299455854, guid: d8d5ead3c898bb3469495239567d7fcb, type: 3}
+      IsPoolable: 0
+      Capacity: 3
+  - Key: SettingUI
+    Bundle:
+      Prefab: {fileID: 4870330007756257976, guid: 1be04bd2e15c87d4bbf20b051b39f081, type: 3}
+      IsPoolable: 0
+      Capacity: 0
+  - Key: BattleUI
+    Bundle:
+      Prefab: {fileID: 4870330007756257976, guid: 5b4413fad4cf2804f9c642f25f1a142e, type: 3}
+      IsPoolable: 0
+      Capacity: 0
+  - Key: CommonUI
+    Bundle:
+      Prefab: {fileID: 7558412658305776215, guid: e692a0c3b7735944aba05fa70b9748f9, type: 3}
+      IsPoolable: 0
+      Capacity: 0
+  - Key: BattleDamageUI
+    Bundle:
+      Prefab: {fileID: 4870330007756257976, guid: 620ac815ec5bba940a3a7995e59f26a0, type: 3}
+      IsPoolable: 1
+      Capacity: 10
+  - Key: BattleCharacterStatusUI
+    Bundle:
+      Prefab: {fileID: 4870330007756257976, guid: a278e50805351f84786148ceef6031bd, type: 3}
+      IsPoolable: 1
+      Capacity: 10
+  - Key: DialogueLogUI
+    Bundle:
+      Prefab: {fileID: 7874513605950688095, guid: 0675abcd913b763439bbcbabb6af0ce7, type: 3}
+      IsPoolable: 0
+      Capacity: 0

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 
 namespace Gehenna
 {
@@ -7,7 +8,7 @@ namespace Gehenna
     {
         private GameConfig config;
         private ManagerContainer container;
-
+        
         public GameManager(GameConfig config)
         {
             this.config = config;
@@ -17,51 +18,47 @@ namespace Gehenna
         {
             container = new ManagerContainer();
             container.Register(() => ManagerFactory.CreateManager<ResourceManager>());
+            container.Register(() => ManagerFactory.CreateManager<PoolingManager>());
             container.Register(() => ManagerFactory.CreateManager<AudioManager>());
             container.Register(() => ManagerFactory.CreateManager<InputManager>());
             container.Register(() => ManagerFactory.CreateManager<UIManager>());
-            container.Register(() => ManagerFactory.CreateManager<DialogueManager>());
-            container.Register(() => ManagerFactory.CreateManager<PoolingManager>());
+            container.Register(() => ManagerFactory.CreateManager<CameraManager>());
+            container.Register(() => ManagerFactory.CreateManager<GameContextManager>());
             container.Register(() => ManagerFactory.CreateManager<GameFlowManager>());
             
-            var gtm = UnityEngine.Object.FindObjectOfType<GameTestManager>();
-            container.Register(() => gtm);
-
-            ManagerContextFactory contextFactory = new ManagerContextFactory(config, container, new IContextFactory[]
+            container.Register(() => ManagerFactory.CreateManager<DialogueManager>());
+            container.Register(() => UnityEngine.Object.FindObjectOfType<Dialoguetestmanager>());
+            
+            
+            
+            ManagerParamFactory paramFactory = new ManagerParamFactory(config, container, new IParamFactory[]
             {
-                new AudioContextFactory(),
-                new GameFlowContextFactory(),
-                new InputContextFactory(),
-                new PoolingContextFactory(),
-                new ResourceContextFactory(),
-                new UIContextFactory(),
-                new DialogueContextFactory()
+                new ResourceParamFactory(),
+                new PoolingParamFactory(),
+                new AudioParamFactory(),
+                new InputParamFactory(),
+                new UIParamFactory(),
+                new CameraParamFactory(),
+                new GameContextParamFactory(),
+                new GameFlowParamFactory(),
                 
-                ,new GTContextFactory()
+                new DialogueParamFactory(),
+                new DTParmaFactory(),
             });
             
             foreach (var subManager in container.GetAll())
             {
                 Type managerType = subManager.GetType();
-                ManagerContext context = contextFactory.CreateContext(managerType);
-                subManager.Initialize(context);
-            }
-            
-        }
-    
-        public void ManualUpdate()
-        {
-            foreach (var each in container.GetAll())
-            {
-                each.ManualUpdate();
+                ManagerParam param = paramFactory.CreateContext(managerType);
+                subManager.Initialize(param);
             }
         }
     
-        public void ManualLateUpdate()
+        public void ManualUpdate(float deltaTime)
         {
             foreach (var each in container.GetAll())
             {
-                each.ManualLateUpdate();
+                each.ManualUpdate(deltaTime);
             }
         }
     
@@ -74,10 +71,8 @@ namespace Gehenna
         }
 
         public void Run()
-        { 
+        {
             container.Resolve<GameFlowManager>().Run();
-
         }
-        
     }
 }

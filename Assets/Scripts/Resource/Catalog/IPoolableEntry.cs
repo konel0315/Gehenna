@@ -5,9 +5,7 @@ namespace Gehenna
 {
     public interface IPoolableEntry
     {
-        Enum Key { get; }
-        GameObject Prefab { get; }
-        int Capacity { get; }
-        bool IsPooling { get; }
+        string Key { get; }
+        PoolableBundle Bundle { get; }
     }
 }

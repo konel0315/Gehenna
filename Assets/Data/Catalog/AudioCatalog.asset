@@ -21,12 +21,6 @@ MonoBehaviour:
     PrefabModificationsReferencedUnityObjects: []
     PrefabModifications: []
     SerializationNodes: []
-  entries:
-  - Key: 0
-    AudioTrack:
-      AudioClip: {fileID: 0}
-      BaseVolume: 1
-      MaxVoices: 1
-      BusType: 0
-      Preload: 0
-      Loop: 0
+  outputFolder: 
+  sourceFolder: 
+  entries: []

@@ -7,66 +7,66 @@ namespace Gehenna
 {
     public class PoolingManager : ISubManager
     {
-        private PoolingContext  context;
-        private readonly Dictionary<Enum, ObjectPool<GameObject>> prefabPoolDict = new();
+        private PoolingParam param;
+        private readonly Dictionary<string, ObjectPool<GameObject>> monoPoolDict = new();
 		private readonly Dictionary<Type, object> objectPoolDict = new();
 
-        public void Initialize(ManagerContext context)
+        public void Initialize(ManagerParam param)
         {
-            if (context is not PoolingContext poolingContext)
+            if (param is not PoolingParam poolingParam)
             {
                 GehennaLogger.Log(this, LogType.Error, "Invalid context");
                 return;
             }
-            this.context = poolingContext;
-
-            foreach (var catalog in context.GameConfig.GetAllCatalogs())
+            this.param = poolingParam;
+            
+            foreach (var catalog in param.GameConfig.GetAllCatalogs())
             {
                 if (catalog is IPoolableCatalog poolableCatalog)
                 {
-                    var poolableEntries = poolableCatalog.GetPoolableEntries();
+                    IEnumerable<IPoolableEntry> poolableEntries = poolableCatalog.GetPoolableEntries();
                     if (poolableEntries == null)
                         continue;
 
-                    GameObject parent = new GameObject($"[ROOT_{catalog.GetType().Name}]");
-
-                    foreach (var entry in poolableEntries)
+                    GameObject parent = new GameObject($"POOL_{catalog.name}");
+                    foreach (var each in poolableEntries)
                     {
-                        if (entry.IsPooling)
+                        PoolableBundle poolableBundle = each.Bundle;
+                        if (poolableBundle.IsPoolable)
                         {
-                            CreatePrefabPool(entry.Key, entry.Prefab, entry.Capacity, parent.transform);
+                            CreateMonoPool
+                            (
+                                key: each.Key, 
+                                prefab: poolableBundle.Prefab, 
+                                capacity: poolableBundle.Capacity, 
+                                parent.transform
+                            );
                         }
                     }
                 }
             }
+            
             GehennaLogger.Log(this, LogType.Success, "Initialize");
         }
 
         public void CleanUp()
         {
-            prefabPoolDict.Clear();
+            monoPoolDict.Clear();
             objectPoolDict.Clear();
         }
-        public GameObject GetPrefabInstance(Enum key)
+        
+        public void ManualUpdate(float deltaTime) { }
+        public void ManualFixedUpdate() { }
+        
+        public GameObject GetMono(string key)
         {
-            if (!prefabPoolDict.TryGetValue(key, out var pool))
+            if (!monoPoolDict.TryGetValue(key, out var pool))
                 throw new KeyNotFoundException($"The prefab for key {key} could not be found.");
 
             return pool.Get();
         }
         
-        public void ReleasePrefabInstance(Enum key, GameObject instance)
-        {
-            if (instance == null)
-                throw new ArgumentNullException(nameof(instance));
-
-            if (!prefabPoolDict.TryGetValue(key, out var pool))
-                throw new KeyNotFoundException($"The prefab pool for key {key} could not be found.");
-
-            pool.Release(instance);
-        }
-
-        public T GetObjectInstance<T>() where T : class
+        public T GetObject<T>() where T : class
         {
             if (!objectPoolDict.TryGetValue(typeof(T), out var poolObj))
                 throw new KeyNotFoundException($"The object {typeof(T).Name} could not be found.");
@@ -78,7 +78,18 @@ namespace Gehenna
             return pool.Get();
         }
         
-        public void ReleaseObjectInstance<T>(T obj) where T : class
+        public void ReleaseMono(string key, GameObject instance)
+        {
+            if (instance == null)
+                throw new ArgumentNullException(nameof(instance));
+
+            if (!monoPoolDict.TryGetValue(key, out var pool))
+                throw new KeyNotFoundException($"The prefab pool for key {key} could not be found.");
+
+            pool.Release(instance.gameObject);
+        }
+        
+        public void ReleaseObject<T>(T instance) where T : class
         {
             if (!objectPoolDict.TryGetValue(typeof(T), out var poolObj))
                 throw new KeyNotFoundException($"The object {typeof(T).Name} could not be found.");
@@ -87,48 +98,78 @@ namespace Gehenna
             if (pool == null)
                 throw new InvalidCastException($"Stored pool is not of type ObjectPool<{typeof(T).Name}>.");
 
-            pool.Release(obj);
+            pool.Release(instance);
+        }
+        
+        private void CreateMonoPool(string key, GameObject prefab, int capacity, Transform poolRoot)
+        {
+            if (string.IsNullOrEmpty(key))
+            {
+                GehennaLogger.Log(this, LogType.Error, "Key is invalid");
+                return;
+            }
+            
+            if (monoPoolDict.ContainsKey(key))
+            {
+                GehennaLogger.Log(this, LogType.Warning, $"Pool already exists for type {key.ToString()}");
+                return;
+            }
+
+            ObjectPool<GameObject> pool = new ObjectPool<GameObject>
+            (
+                createFunc: () =>
+                {
+                    return UnityEngine.Object.Instantiate(prefab, poolRoot);
+                },
+                actionOnGet: go =>
+                {
+                    go.SetActive(true);
+                },
+                actionOnRelease: go =>
+                {
+                    go.SetActive(false);
+                    go.transform.SetParent(poolRoot, worldPositionStays: true);
+                },
+                actionOnDestroy: go =>
+                {
+                    UnityEngine.Object.Destroy(go);
+                },
+                defaultCapacity: capacity
+            );
+
+            monoPoolDict.Add(key, pool);
+            PrewarmPool(pool, capacity);
+
+            GehennaLogger.Log(this, LogType.Success, $"Prefab pool created for: {prefab.name} (Capacity: {capacity})");
         }
         
         public void CreateObjectPool<T>(Func<T> factory, int capacity) where T : class
         {
+            if (factory == null)
+            {
+                GehennaLogger.Log(this, LogType.Error, "Factory is null");
+                return;
+            }
+            
             if (objectPoolDict.ContainsKey(typeof(T)))
+            {                
+                GehennaLogger.Log(this, LogType.Warning, $"Pool already exists for type {typeof(T).Name}");
                 return;
+            }
 
-            var pool = new ObjectPool<T>
+            ObjectPool<T> pool = new ObjectPool<T>
             (
-                createFunc: () => factory != null ? factory() : Activator.CreateInstance<T>(),
-                defaultCapacity: capacity
-            );
-
-            objectPoolDict.Add(typeof(T), pool);
-            GehennaLogger.Log(this, LogType.Success, $"Object pool created for: {typeof(T).Name} (Capacity: {capacity})");
-        }
-
-        private void CreatePrefabPool(Enum key, GameObject prefab, int capacity, Transform parent)
-        {
-            if (prefabPoolDict.ContainsKey(key))
-                return;
-
-            var pool = new ObjectPool<GameObject>
-            (
-                createFunc: () => UnityEngine.Object.Instantiate(prefab, parent),
-                actionOnGet: go => go.SetActive(true),
-                actionOnRelease: go =>
+                createFunc: () =>
                 {
-                    go.SetActive(false);
-                    go.transform.SetParent(parent, worldPositionStays: true);
+                    return factory();
                 },
-                actionOnDestroy: go => UnityEngine.Object.Destroy(go),
                 defaultCapacity: capacity
             );
-
-            prefabPoolDict.Add(key, pool);
-
+            
+            objectPoolDict.Add(typeof(T), pool);
             PrewarmPool(pool, capacity);
-
-            GehennaLogger.Log(this, LogType.Success, $"Prefab pool created for: {prefab.name} (Capacity: {capacity})");
-
+            
+            GehennaLogger.Log(this, LogType.Success, $"Object pool created for: {typeof(T).Name} (Capacity: {capacity})");
         }
         
         private void PrewarmPool<T>(ObjectPool<T> pool, int count) where T : class
@@ -140,9 +181,5 @@ namespace Gehenna
             foreach (var obj in temp)
                 pool.Release(obj);
         }
-        
-        public void ManualUpdate() { }
-        public void ManualLateUpdate() { }
-        public void ManualFixedUpdate() { }
     }
 }

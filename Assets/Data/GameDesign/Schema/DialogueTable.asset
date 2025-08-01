@@ -22,12 +22,12 @@ MonoBehaviour:
     PrefabModifications: []
     SerializationNodes: []
   schemaName: DialogueTable
-  description: "\uCE90\uB9AD\uD130\uAC04\uC758  \uB300\uD654 \uBC0F \uC5F0\uCD9C
-    \uC815\uBCF4\uB97C \uC800\uC7A5"
-  excelFile: Assets/Data/GameDesign/Excel/DialogueTable.xlsx
+  description: 
+  excelFile: Assets/Data/GameDesign/Excel/Test.xlsx
+  useGrouping: 1
   columns:
   - columnType: string
-    columnName: EventName
+    columnName: DialogueKey
   - columnType: int
     columnName: ID
   - columnType: string
@@ -37,16 +37,20 @@ MonoBehaviour:
   - columnType: string
     columnName: Portrait
   - columnType: string
-    columnName: CommandType
-  - columnType: string
-    columnName: CommandData
+    columnName: Type
   - columnType: int
-    columnName: DefaultNextID
+    columnName: DefaultID
   - columnType: string
     columnName: Condition1
   - columnType: int
     columnName: NextID1
   - columnType: string
-    columnName: "Condition2\t"
+    columnName: Condition2
   - columnType: int
     columnName: NextID2
+  - columnType: string
+    columnName: Condition3
+  - columnType: int
+    columnName: NextID3
+  - columnType: string
+    columnName: DefaultSpeed

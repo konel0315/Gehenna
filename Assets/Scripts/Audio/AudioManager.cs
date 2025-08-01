@@ -2,22 +2,27 @@
 {
     public class AudioManager : ISubManager
     {
-        private AudioContext context;
-        private AudioConfig audioConfig;
+        private AudioParam param;
+        private AudioConfig config;
 
         private VolumeMixer volumeMixer;
         private MusicPlayer musicPlayer;
         private AudioCuePlayer cuePlayer;
         
-        public void Initialize(ManagerContext context)
+        public void Initialize(ManagerParam param)
         {
-            if (context is not AudioContext audioContext)
+            if (param is not AudioParam audioParam)
             {
                 GehennaLogger.Log(this, LogType.Error, "Invalid context");
                 return;
             }
-            this.context = audioContext;
-            this.audioConfig = audioContext.GameConfig.AudioConfig;
+            this.param = audioParam;
+
+            if (!audioParam.GameConfig.TryGetConfig<AudioConfig>(out config))
+            {
+                GehennaLogger.Log(this, LogType.Error, "Invalid config");
+                return;
+            }
 
             volumeMixer = new VolumeMixer();
             musicPlayer = new MusicPlayer();
@@ -27,8 +32,8 @@
             musicPlayer.Initialize(volumeMixer);
             cuePlayer.Initialize(volumeMixer);
             
-            audioContext.PoolingManager.CreateObjectPool(() => AudioHandleFactory.CreateDynamicAudioHandler(), audioConfig.maxDynamicAudioHandlers);
-            if (!audioContext.GameConfig.TryGetCatalog<AudioCatalog>(out var audioCatalog))
+            audioParam.PoolingManager.CreateObjectPool<DynamicAudioHandler>(() => AudioHandleFactory.CreateDynamicAudioHandler(), config.maxDynamicAudioHandlers);
+            if (!audioParam.GameConfig.TryGetCatalog<AudioCatalog>(out var audioCatalog))
             {
                 GehennaLogger.Log(this, LogType.Error, "AudioCatalog not found in GameConfig");
                 return;
@@ -43,14 +48,13 @@
             musicPlayer?.CleanUp();
             cuePlayer?.CleanUp();
 
-            context = null;
+            param = null;
             volumeMixer = null;
             musicPlayer = null;
             cuePlayer = null;
         }
         
-        public void ManualUpdate() { }
-        public void ManualLateUpdate() { }
+        public void ManualUpdate(float deltaTime) { }
         public void ManualFixedUpdate() { }
     }
 }

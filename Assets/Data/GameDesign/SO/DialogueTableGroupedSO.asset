@@ -1,0 +1,519 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 56efba93d6b55d146ac62728d4a07d31, type: 3}
+  m_Name: DialogueTableGroupedSO
+  m_EditorClassIdentifier: 
+  serializationData:
+    SerializedFormat: 2
+    SerializedBytes: 
+    ReferencedUnityObjects: []
+    SerializedBytesString: 
+    Prefab: {fileID: 0}
+    PrefabModificationsReferencedUnityObjects: []
+    PrefabModifications: []
+    SerializationNodes:
+    - Name: GroupedTables
+      Entry: 7
+      Data: 0|System.Collections.Generic.Dictionary`2[[System.String, mscorlib],[System.Collections.Generic.List`1[[Gehenna.DialogueTable,
+        Assembly-CSharp]], mscorlib]], mscorlib
+    - Name: comparer
+      Entry: 7
+      Data: 1|System.Collections.Generic.GenericEqualityComparer`1[[System.String,
+        mscorlib]], mscorlib
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 12
+      Data: 1
+    - Name: 
+      Entry: 7
+      Data: 
+    - Name: $k
+      Entry: 1
+      Data: FirstDialogue
+    - Name: $v
+      Entry: 7
+      Data: 2|System.Collections.Generic.List`1[[Gehenna.DialogueTable, Assembly-CSharp]],
+        mscorlib
+    - Name: 
+      Entry: 12
+      Data: 10
+    - Name: 
+      Entry: 7
+      Data: 3|Gehenna.DialogueTable, Assembly-CSharp
+    - Name: DialogueKey
+      Entry: 1
+      Data: FirstDialogue
+    - Name: ID
+      Entry: 3
+      Data: 1
+    - Name: Speaker
+      Entry: 1
+      Data: "\uD0A4\uD0A4"
+    - Name: Text
+      Entry: 1
+      Data: "<color=yellow>\uBAA8\uD5D8\uAC00</color>\uB2D8, <br>\uB2F9\uC2E0\uC744
+        <speed=1><anim=shake><color=red>\uAE30\uB2E4\uB9AC\uACE0 \uC788\uC5C8\uC2B5\uB2C8\uB2E4</color></anim></speed>."
+    - Name: Portrait
+      Entry: 1
+      Data: KIKI.png
+    - Name: Type
+      Entry: 1
+      Data: Choice
+    - Name: DefaultID
+      Entry: 3
+      Data: 3
+    - Name: Condition1
+      Entry: 1
+      Data: "1\uBC88 \uC120\uD0DD\uC9C0"
+    - Name: NextID1
+      Entry: 3
+      Data: 6
+    - Name: Condition2
+      Entry: 1
+      Data: "2\uBC88 \uC120\uD0DD\uC9C0"
+    - Name: NextID2
+      Entry: 3
+      Data: 7
+    - Name: Condition3
+      Entry: 1
+      Data: "3\uBC88\uC120\uD0DD\uC9C0"
+    - Name: NextID3
+      Entry: 3
+      Data: 2
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 7
+      Data: 4|Gehenna.DialogueTable, Assembly-CSharp
+    - Name: DialogueKey
+      Entry: 1
+      Data: FirstDialogue
+    - Name: ID
+      Entry: 3
+      Data: 2
+    - Name: Speaker
+      Entry: 1
+      Data: "\uB124\uC988"
+    - Name: Text
+      Entry: 1
+      Data: "<speed=0.03>\uC870\uC6A9\uD788 \uD574...</speed> <br><speed=0.01><anim=punch><color=red>\uC9C0\uAE08</color></anim>
+        <color=white>\uC6C0\uC9C1\uC774\uBA74</color> <color=red>\uC8FD\uB294\uB2E4.</color></speed>"
+    - Name: Portrait
+      Entry: 1
+      Data: NEZ.png
+    - Name: Type
+      Entry: 1
+      Data: AutoBranch
+    - Name: DefaultID
+      Entry: 3
+      Data: 2
+    - Name: Condition1
+      Entry: 1
+      Data: QuestDone=Apple
+    - Name: NextID1
+      Entry: 3
+      Data: 3
+    - Name: Condition2
+      Entry: 1
+      Data: doneQuestion
+    - Name: NextID2
+      Entry: 3
+      Data: 10
+    - Name: Condition3
+      Entry: 6
+      Data: 
+    - Name: NextID3
+      Entry: 3
+      Data: 0
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 7
+      Data: 5|Gehenna.DialogueTable, Assembly-CSharp
+    - Name: DialogueKey
+      Entry: 1
+      Data: FirstDialogue
+    - Name: ID
+      Entry: 3
+      Data: 3
+    - Name: Speaker
+      Entry: 1
+      Data: "\uD0A4\uD0A4"
+    - Name: Text
+      Entry: 1
+      Data: "<color=cyan>\uD3EC\uAE30\uD558\uC9C0 \uB9C8\uC138\uC694.</color> <br><speed=0.02>\uB2F9\uC2E0\uC740
+        <anim=bounce><color=yellow>\uC0DD\uC874\uC790</color></anim>\uC785\uB2C8\uB2E4.</speed>"
+    - Name: Portrait
+      Entry: 1
+      Data: KIKI.png
+    - Name: Type
+      Entry: 1
+      Data: Normal
+    - Name: DefaultID
+      Entry: 3
+      Data: 4
+    - Name: Condition1
+      Entry: 6
+      Data: 
+    - Name: NextID1
+      Entry: 3
+      Data: 0
+    - Name: Condition2
+      Entry: 6
+      Data: 
+    - Name: NextID2
+      Entry: 3
+      Data: 0
+    - Name: Condition3
+      Entry: 6
+      Data: 
+    - Name: NextID3
+      Entry: 3
+      Data: 0
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 7
+      Data: 6|Gehenna.DialogueTable, Assembly-CSharp
+    - Name: DialogueKey
+      Entry: 1
+      Data: FirstDialogue
+    - Name: ID
+      Entry: 3
+      Data: 4
+    - Name: Speaker
+      Entry: 1
+      Data: "\uB124\uC988"
+    - Name: Text
+      Entry: 1
+      Data: "<speed=0.05>\uC774 \uBAA8\uB4E0 \uAC74... <color=white>\uACC4\uD68D</color>\uC774\uC5C8\uC5B4.</speed>
+        <br><speed=0.01><anim=shake><color=red>\uCC98\uC74C\uBD80\uD130!</color></anim></speed>"
+    - Name: Portrait
+      Entry: 1
+      Data: NEZ.png
+    - Name: Type
+      Entry: 1
+      Data: Normal
+    - Name: DefaultID
+      Entry: 3
+      Data: 5
+    - Name: Condition1
+      Entry: 6
+      Data: 
+    - Name: NextID1
+      Entry: 3
+      Data: 0
+    - Name: Condition2
+      Entry: 6
+      Data: 
+    - Name: NextID2
+      Entry: 3
+      Data: 0
+    - Name: Condition3
+      Entry: 6
+      Data: 
+    - Name: NextID3
+      Entry: 3
+      Data: 0
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 7
+      Data: 7|Gehenna.DialogueTable, Assembly-CSharp
+    - Name: DialogueKey
+      Entry: 1
+      Data: FirstDialogue
+    - Name: ID
+      Entry: 3
+      Data: 5
+    - Name: Speaker
+      Entry: 1
+      Data: 5
+    - Name: Text
+      Entry: 1
+      Data: 5
+    - Name: Portrait
+      Entry: 1
+      Data: NEZ.png
+    - Name: Type
+      Entry: 1
+      Data: Choice
+    - Name: DefaultID
+      Entry: 3
+      Data: 6
+    - Name: Condition1
+      Entry: 1
+      Data: "1\uBC88 \uC120\uD0DD\uC9C0"
+    - Name: NextID1
+      Entry: 3
+      Data: 6
+    - Name: Condition2
+      Entry: 1
+      Data: "2\uBC88 \uC120\uD0DD\uC9C0"
+    - Name: NextID2
+      Entry: 3
+      Data: 7
+    - Name: Condition3
+      Entry: 1
+      Data: "3\uBC88\uC120\uD0DD\uC9C0"
+    - Name: NextID3
+      Entry: 3
+      Data: 2
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 7
+      Data: 8|Gehenna.DialogueTable, Assembly-CSharp
+    - Name: DialogueKey
+      Entry: 1
+      Data: FirstDialogue
+    - Name: ID
+      Entry: 3
+      Data: 6
+    - Name: Speaker
+      Entry: 1
+      Data: 6
+    - Name: Text
+      Entry: 1
+      Data: 6
+    - Name: Portrait
+      Entry: 1
+      Data: NEZ.png
+    - Name: Type
+      Entry: 1
+      Data: Normal
+    - Name: DefaultID
+      Entry: 3
+      Data: 7
+    - Name: Condition1
+      Entry: 6
+      Data: 
+    - Name: NextID1
+      Entry: 3
+      Data: 0
+    - Name: Condition2
+      Entry: 6
+      Data: 
+    - Name: NextID2
+      Entry: 3
+      Data: 0
+    - Name: Condition3
+      Entry: 6
+      Data: 
+    - Name: NextID3
+      Entry: 3
+      Data: 0
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 7
+      Data: 9|Gehenna.DialogueTable, Assembly-CSharp
+    - Name: DialogueKey
+      Entry: 1
+      Data: FirstDialogue
+    - Name: ID
+      Entry: 3
+      Data: 7
+    - Name: Speaker
+      Entry: 1
+      Data: 7
+    - Name: Text
+      Entry: 1
+      Data: 7
+    - Name: Portrait
+      Entry: 1
+      Data: NEZ.png
+    - Name: Type
+      Entry: 1
+      Data: Normal
+    - Name: DefaultID
+      Entry: 3
+      Data: 8
+    - Name: Condition1
+      Entry: 6
+      Data: 
+    - Name: NextID1
+      Entry: 3
+      Data: 0
+    - Name: Condition2
+      Entry: 6
+      Data: 
+    - Name: NextID2
+      Entry: 3
+      Data: 0
+    - Name: Condition3
+      Entry: 6
+      Data: 
+    - Name: NextID3
+      Entry: 3
+      Data: 0
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 7
+      Data: 10|Gehenna.DialogueTable, Assembly-CSharp
+    - Name: DialogueKey
+      Entry: 1
+      Data: FirstDialogue
+    - Name: ID
+      Entry: 3
+      Data: 8
+    - Name: Speaker
+      Entry: 1
+      Data: 8
+    - Name: Text
+      Entry: 1
+      Data: 8
+    - Name: Portrait
+      Entry: 1
+      Data: NEZ.png
+    - Name: Type
+      Entry: 1
+      Data: Normal
+    - Name: DefaultID
+      Entry: 3
+      Data: 9
+    - Name: Condition1
+      Entry: 6
+      Data: 
+    - Name: NextID1
+      Entry: 3
+      Data: 0
+    - Name: Condition2
+      Entry: 6
+      Data: 
+    - Name: NextID2
+      Entry: 3
+      Data: 0
+    - Name: Condition3
+      Entry: 6
+      Data: 
+    - Name: NextID3
+      Entry: 3
+      Data: 0
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 7
+      Data: 11|Gehenna.DialogueTable, Assembly-CSharp
+    - Name: DialogueKey
+      Entry: 1
+      Data: FirstDialogue
+    - Name: ID
+      Entry: 3
+      Data: 9
+    - Name: Speaker
+      Entry: 1
+      Data: 9
+    - Name: Text
+      Entry: 1
+      Data: 9
+    - Name: Portrait
+      Entry: 1
+      Data: NEZ.png
+    - Name: Type
+      Entry: 1
+      Data: Normal
+    - Name: DefaultID
+      Entry: 3
+      Data: 10
+    - Name: Condition1
+      Entry: 6
+      Data: 
+    - Name: NextID1
+      Entry: 3
+      Data: 0
+    - Name: Condition2
+      Entry: 6
+      Data: 
+    - Name: NextID2
+      Entry: 3
+      Data: 0
+    - Name: Condition3
+      Entry: 6
+      Data: 
+    - Name: NextID3
+      Entry: 3
+      Data: 0
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 7
+      Data: 12|Gehenna.DialogueTable, Assembly-CSharp
+    - Name: DialogueKey
+      Entry: 1
+      Data: FirstDialogue
+    - Name: ID
+      Entry: 3
+      Data: 10
+    - Name: Speaker
+      Entry: 1
+      Data: 10
+    - Name: Text
+      Entry: 1
+      Data: 10
+    - Name: Portrait
+      Entry: 1
+      Data: NEZ.png
+    - Name: Type
+      Entry: 1
+      Data: Normal
+    - Name: DefaultID
+      Entry: 3
+      Data: 0
+    - Name: Condition1
+      Entry: 6
+      Data: 
+    - Name: NextID1
+      Entry: 3
+      Data: 0
+    - Name: Condition2
+      Entry: 6
+      Data: 
+    - Name: NextID2
+      Entry: 3
+      Data: 0
+    - Name: Condition3
+      Entry: 6
+      Data: 
+    - Name: NextID3
+      Entry: 3
+      Data: 0
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 13
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 13
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 

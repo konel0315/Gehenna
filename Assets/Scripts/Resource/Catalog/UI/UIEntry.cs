@@ -1,4 +1,7 @@
 ﻿using System;
+using System.Linq;
+using System.Reflection;
+using Sirenix.OdinInspector;
 using UnityEngine;
 using UnityEngine.Serialization;
 
@@ -7,15 +10,11 @@ namespace Gehenna
     [Serializable]
     public class UIEntry : IPoolableEntry
     {
-        public UIType Key;
-        public GameObject Prefab;
-        public int Capacity;
-        public bool IsPooling;
+        [ValueDropdown("@UIKey.AllKeys")]
+        public string Key;
+        public UIBundle Bundle;
         
-        
-        Enum IPoolableEntry.Key => Key;
-        GameObject IPoolableEntry.Prefab => Prefab;
-        int IPoolableEntry.Capacity => Capacity;
-        bool IPoolableEntry.IsPooling => IsPooling;
+        string IPoolableEntry.Key => Key;
+        PoolableBundle IPoolableEntry.Bundle => Bundle;
     }
 }

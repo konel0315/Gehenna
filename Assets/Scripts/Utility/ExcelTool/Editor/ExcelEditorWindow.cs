@@ -106,8 +106,27 @@ namespace Gehenna
                     string soFilePath = Path.Combine(folder, schema.schemaName + "SO.cs");
                     File.WriteAllText(soFilePath, soCode);
                 }
-
+                
                 AssetDatabase.Refresh();
+                
+                GameConfig config = AssetDatabase.LoadAssetAtPath<GameConfig>("Assets/Data/Config/GameConfig.asset");
+                if (config == null)
+                {
+                    Debug.LogError("GameConfig.asset not found.");
+                    return;
+                }
+                
+                string assetSearchFilter = $"t:BaseTableSO {schema.schemaName}*SO";
+                string[] guids = AssetDatabase.FindAssets(assetSearchFilter, new[] { "Assets/Data/GameDesign/SO" });
+                if (guids.Length == 0)
+                {
+                    Debug.LogError($"TableSO asset for {schema.schemaName} not found.");
+                    return;
+                }
+                
+                string path = AssetDatabase.GUIDToAssetPath(guids[0]);
+                BaseTableSO tableSO = AssetDatabase.LoadAssetAtPath<BaseTableSO>(path);
+                config.AddTableSO(tableSO);
 
                 if (!string.IsNullOrEmpty(classCode) && !string.IsNullOrEmpty(soCode))
                 {
@@ -143,41 +162,98 @@ namespace Gehenna
                 {
                     EditorUtility.DisplayDialog("Error", $"SO type '{schema.schemaName}SO' not found.", "OK");
                 }
-                
-                string soFolder = ExcelEditorConfig.Instance.SoFolder;
-                string soPath = Path.Combine(soFolder, schema.schemaName + "SO.asset").Replace("\\", "/");
 
-                ScriptableObject soInstance = AssetDatabase.LoadAssetAtPath<ScriptableObject>(soPath);
-                if (soInstance == null)
+                string soFolder = ExcelEditorConfig.Instance.SoFolder;
+                
+                if (schema.useGrouping)
                 {
-                    soInstance = ScriptableObject.CreateInstance(soType);
-                    if (!Directory.Exists(soFolder))
-                        Directory.CreateDirectory(soFolder);
-                    AssetDatabase.CreateAsset(soInstance, soPath);
+                    var groupedDataRaw = ExcelDataImporter.ImportGrouped(rowType, schema);
+                    
+                    string groupSoPath = Path.Combine(soFolder, $"{schema.schemaName}GroupedSO.asset").Replace("\\", "/");
+                    ScriptableObject groupSO = AssetDatabase.LoadAssetAtPath<ScriptableObject>(groupSoPath);
+                    if (groupSO == null)
+                    {
+                        if (!Directory.Exists(soFolder))
+                            Directory.CreateDirectory(soFolder);
+
+                        groupSO = ScriptableObject.CreateInstance(soType);
+                        AssetDatabase.CreateAsset(groupSO, groupSoPath);
+                    }
+
+                    FieldInfo listField = soType.GetField("GroupedTables");
+                    if (listField == null)
+                    {
+                        EditorUtility.DisplayDialog("Error", $"SO class '{soType.Name}' does not have a 'GroupedTables' field.", "OK");
+                        return;
+                    }
+
+                    var groupedData = (IDictionary)Activator.CreateInstance(typeof(Dictionary<,>).MakeGenericType(
+                        typeof(string),
+                        typeof(List<>).MakeGenericType(rowType)
+                    ));
+                    
+                    foreach (var kvp in groupedDataRaw)
+                    {
+                        string key = kvp.Key;
+                        IList list = kvp.Value;
+
+                        var typedList = (IList)Activator.CreateInstance(typeof(List<>).MakeGenericType(rowType));
+                        foreach (var item in list)
+                        {
+                            typedList.Add(item);
+                        }
+
+                        groupedData.GetType().GetMethod("Add").Invoke(groupedData, new object[] { key, typedList });
+                    }
+
+                    listField.SetValue(groupSO, groupedData);
+
+                    EditorUtility.SetDirty(groupSO);
                     AssetDatabase.SaveAssets();
                     AssetDatabase.Refresh();
+
+                    EditorUtility.DisplayDialog("Notice", "Grouped data imported and saved successfully.", "OK");
                 }
-                
-                MethodInfo importMethod = typeof(ExcelDataImporter).GetMethod("Import");
-                IList importedData = importMethod.Invoke(null, new object[] { rowType, schema }) as IList;
-                if (importedData == null)
+
+
+
+                else
                 {
-                    EditorUtility.DisplayDialog("Error", "Failed to import Excel data.", "OK");
+                    string soPath = Path.Combine(soFolder, schema.schemaName + "SO.asset").Replace("\\", "/");
+                    ScriptableObject soInstance = AssetDatabase.LoadAssetAtPath<ScriptableObject>(soPath);
+                    if (soInstance == null)
+                    {
+                        soInstance = ScriptableObject.CreateInstance(soType);
+                        if (!Directory.Exists(soFolder))
+                            Directory.CreateDirectory(soFolder);
+                        AssetDatabase.CreateAsset(soInstance, soPath);
+                        AssetDatabase.SaveAssets();
+                        AssetDatabase.Refresh();
+                    }
+
+                    MethodInfo importMethod = typeof(ExcelDataImporter).GetMethod("Import");
+                    IList importedData = importMethod.Invoke(null, new object[] { rowType, schema }) as IList;
+                    if (importedData == null)
+                    {
+                        EditorUtility.DisplayDialog("Error", "Failed to import Excel data.", "OK");
+                    }
+
+                    FieldInfo listField = soType.GetField("Tables");
+                    if (listField == null)
+                    {
+                        EditorUtility.DisplayDialog("Error",
+                            $"SO class '{soType.Name}' does not have a 'Tables' field.", "OK");
+                    }
+
+                    listField.SetValue(soInstance, importedData);
+
+                    EditorUtility.SetDirty(soInstance);
+                    AssetDatabase.SaveAssets();
+                    AssetDatabase.Refresh();
+
+                    EditorUtility.DisplayDialog("Notice",
+                        $"Data imported and injected into {schema.schemaName}SO successfully.", "OK");
                 }
-                
-                FieldInfo listField = soType.GetField("Tables");
-                if (listField == null)
-                {
-                    EditorUtility.DisplayDialog("Error", $"SO class '{soType.Name}' does not have a 'Tables' field.", "OK");
-                }
-
-                listField.SetValue(soInstance, importedData);
-
-                EditorUtility.SetDirty(soInstance);
-                AssetDatabase.SaveAssets();
-                AssetDatabase.Refresh();
-
-                EditorUtility.DisplayDialog("Notice", $"Data imported and injected into {schema.schemaName}SO successfully.", "OK");
             }
         }
     }
